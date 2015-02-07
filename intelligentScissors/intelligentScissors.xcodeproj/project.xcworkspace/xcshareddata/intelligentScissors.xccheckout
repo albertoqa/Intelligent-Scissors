@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>CDA92161-343D-466D-B08F-B9E83B97960A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>intelligentScissors</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>5116553B5463BDB0FEA4556D4E54678113870F85</key>
+		<string>https://github.com/albertoqa/Intelligent-Scissors</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>intelligentScissors/intelligentScissors.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>5116553B5463BDB0FEA4556D4E54678113870F85</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/albertoqa/Intelligent-Scissors</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>5116553B5463BDB0FEA4556D4E54678113870F85</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>5116553B5463BDB0FEA4556D4E54678113870F85</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Intelligent-Scissors</string>
+		</dict>
+	</array>
+</dict>
+</plist>
