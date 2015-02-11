@@ -84,7 +84,6 @@ void Window::selectImage()
 	cout<<"Iniciando procesado de la imagen..."<<endl;
 	is = IntelligentScissors(filePath);
 	drawImage();
-	cout<<"Programa finalizado."<<endl;
 }
 
 /*

@@ -18,19 +18,24 @@
 
 using namespace std;
 
+/*
+ * Variable necesaria para gestionar la interfaz.
+*/
 Window MainWindow;
 
+/*
+ * Función que controla los eventos de los clicks del ratón. 
+*/
 void CallBackFunc(int event, int x, int y, int flags, void* userdata)
 {
  	MainWindow.touch(event, x, y);
 }
 
+/*
+ * Función principal del programa.
+*/
 int main(int argc, char **argv)
 {
-	string filePath = "images/lena.jpg";
-	if(argc > 1)
-		filePath = argv[1];
-
-	MainWindow = Window(filePath);
+	MainWindow = Window();
 	MainWindow.start();
 }

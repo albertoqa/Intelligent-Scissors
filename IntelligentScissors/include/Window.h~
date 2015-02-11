@@ -33,6 +33,7 @@ public:
 	void start();	
 	void touch(int event, int x, int y);
 	void clear();
+	bool selectOption(int op);
 	void selectImage();
 };
 void CallBackFunc(int event, int x, int y, int flags, void* userdata);

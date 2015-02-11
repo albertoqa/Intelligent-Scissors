@@ -272,7 +272,7 @@ void IntelligentScissors::drawPath(Point s)
 void IntelligentScissors::drawPoint(Point s)
 {
 	s = Point(s.y, s.x);
-	circle(imgColor, s, 6, Scalar(0,255,0), -1);
+	circle(imgColor, s, 3, Scalar(0,255,0), -1);
 }
 
 /*
