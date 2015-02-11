@@ -334,6 +334,33 @@ En este caso el ajuste es muy malo, se observa como la curva nunca se ajusta y s
 
 Ahora el ajuste del cuerpo se observa que es aceptable, aunque en la cara el ajuste es mucho mejor.
 
+\section{Conclusiones}
+
+Como conclusión al trabajo es conveniente comentar los resultados de los experimentos, en los cuales se puede observar como en imágenes sencillas como son el rectángulo sobre fondo en blanco el ajuste varía mucho si el camino necesita un de un giro para ajustarse, y se puede ver como suele fallar. También en la imagen del tigre son visibles algunas curvas en los caminos cuando debería ajustarse a la figura, siendo además sobre un fondo en blanco. \\
+
+Haciendo los experimentos se puede decir que en caminos entre dos píxeles situados relativamente rectos, incluso con una pequeña curvatura, el algoritmo funciona bien, pero al necesitar de un giro o en zonas de la imagen con un rango de colores más amplio el algoritmo tiene un fallo mucho mayor.\\
+
+También comentar como mejoras en la implementación que aunque la ejecución es eficiente cuando se trabaja con imágenes más grandes los tiempos son mucho mayores para calcular los caminos óptimos, esto es debido al calculo de los vecinos de cada píxel y al mantenimiento de las estructuras de datos, que al ser imágenes mayores estas estructuras son de un tamaño muy superior. \\
+
+En cuanto como mejoras en la implementación seria importante considerar un manejo más eficiente de las estructuras de datos, sobre todo del grafo de costes, una idea sería por ejemplo el gestionarlo dinámicamente sin tener que almacenar todos los píxeles de la imagen desde el principio.\\
+
+\section{Bibliografía}
+
+\begin{itemize}
+
+\item http://www.cs.cornell.edu/Courses/cs4670/2013fa/projects/p1/
+
+\item http://docs.opencv.org/modules/core/doc/drawing_functions.html#circle
+
+\item http://www.cplusplus.com/reference/set/multiset/
+
+\item http://opencv-srf.blogspot.com.es/2011/11/mouse-events.html
+
+\item http://docs.opencv.org/doc/tutorials/imgproc/imgtrans/sobel_derivatives/sobel_derivatives.html
+
+\item http://docs.opencv.org/doc/tutorials/imgproc/imgtrans/laplace_operator/laplace_operator.html
+
+\end{itemize}
 
 
 %------------------------------------------------
