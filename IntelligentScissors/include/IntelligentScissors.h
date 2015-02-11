@@ -5,8 +5,9 @@
  *
  * Created on: 25/01/2015
  *      Author: Javier Moreno Vega <jmorenov@correo.ugr.es>
- * Last modified on: 9/01/2015
- * 	Modified by: Javier Moreno Vega <jmorenov@correo.ugr.es>
+ *		Author: Alberto Quesada Aranda <qa.alberto@gmail.com>	
+ *
+ * Last modified on: 11/02/2015
  * 
  * File: IntelligentScissors.h
  */
@@ -78,9 +79,12 @@ private:
 	double fZ(Point q);
 	double fD(Point p, Point q);
 	double fG(Point q, int n);
+	void NormalizeSmallValues(double &v);
+	void NormalizePoint(Point &p);
 	bool find(multiset<Pixel*, comp> &L, Pixel* p);
 
 	void setError(int error);
+	bool checkDimensions(Point p);
 
 	void drawPath(Point s);
 	void drawPoint(Point s);

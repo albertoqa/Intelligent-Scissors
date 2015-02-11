@@ -5,8 +5,9 @@
  *
  * Created on: 25/01/2015
  *      Author: Javier Moreno Vega <jmorenov@correo.ugr.es>
- * Last modified on: 9/01/2015
- * 	Modified by: Javier Moreno Vega <jmorenov@correo.ugr.es>
+ *		Author: Alberto Quesada Aranda <qa.alberto@gmail.com>	
+ *
+ * Last modified on: 11/02/2015
  * 
  * File: Window.cpp
  */

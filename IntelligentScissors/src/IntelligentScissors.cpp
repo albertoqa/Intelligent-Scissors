@@ -5,8 +5,9 @@
  *
  * Created on: 25/01/2015
  *      Author: Javier Moreno Vega <jmorenov@correo.ugr.es>
- * Last modified on: 9/01/2015
- * 	Modified by: Javier Moreno Vega <jmorenov@correo.ugr.es>
+ *		Author: Alberto Quesada Aranda <qa.alberto@gmail.com>		
+ *
+ * Last modified on: 11/02/2015
  * 
  * File: IntelligentScissors.cpp
  */
@@ -33,8 +34,8 @@ IntelligentScissors::IntelligentScissors(string filePath, float wZ, float wD, fl
 
 void IntelligentScissors::initData()
 {
-  	GaussianBlur(imgGray, imgGaussian, Size(1,1), 5, 5, BORDER_DEFAULT); //Comprobar
-	Laplacian(imgGaussian, imgLaplacian, CV_32F, 1, 1, 0, BORDER_DEFAULT); //Comprobar
+  	GaussianBlur(imgGray, imgGaussian, Size(1,1), 5, 5, BORDER_DEFAULT);
+	Laplacian(imgGaussian, imgLaplacian, CV_32F, 1, 1, 0, BORDER_DEFAULT);
 
 	Sobel(imgGray, imgGradX, CV_32F, 1, 0, 3, 1, 0, BORDER_DEFAULT);
 	Sobel(imgGray, imgGradY, CV_32F, 0, 1, 3, 1, 0, BORDER_DEFAULT);
@@ -64,10 +65,10 @@ void IntelligentScissors::calculateLocalCost(Point p)
 	for(int n=0; n<8; n++)
 	{
 		q = getNeighbor(p, n);
-		if(q.x < imgGray.rows && q.y < imgGray.cols && q.x >= 0 && q.y >= 0)
+		if(checkDimensions(q))
 			pix->N[n] = fZ(q) + fD(p, q) + fG(q, n);
 		else
-			pix->N[n] = 10000000;
+			pix->N[n] = 1000000;
 	}
 	pix->calculated = true;
 }
@@ -75,13 +76,20 @@ void IntelligentScissors::calculateLocalCost(Point p)
 Pixel* IntelligentScissors::getPixel(Point p)
 {
 	Pixel *pix = NULL;
-	if(p.x < imgGray.rows && p.y < imgGray.cols && p.x >= 0 && p.y >= 0)
+	if(checkDimensions(p))
 	{
 		pix = &l[p.x][p.y];
 		if(!pix->calculated)
 			calculateLocalCost(p);
 	}
 	return pix;
+}
+
+bool IntelligentScissors::checkDimensions(Point p)
+{
+	if(p.x < imgGray.rows && p.y < imgGray.cols && p.x >= 0 && p.y >= 0)
+		return true;
+	return false;
 }
 
 double IntelligentScissors::fZ(Point q)
@@ -91,38 +99,40 @@ double IntelligentScissors::fZ(Point q)
 	return wZ;
 }
 
-// Comprobar
 double IntelligentScissors::fD(Point p, Point q)
 {
 	Point Lpq;
-	float dp, dq;
-	float f_d = 0.0;
+	double dp, dq;
 	Point Dp = Point(imgGradY.at<float>(p),-imgGradX.at<float>(p));
 	Point Dq = Point(imgGradY.at<float>(q),-imgGradX.at<float>(q));
 
-	if ((Dp.x*(q.x-p.x))+(Dp.y*(q.y-p.y))>=0)
-		Lpq = Point(q.x-p.x, q.y-p.y);
-	else
-		Lpq = Point(p.x-q.x, p.y-q.y);
+	if ((Dp.x*(q.x-p.x))+(Dp.y*(q.y-p.y))>=0) Lpq = Point(q.x-p.x, q.y-p.y);
+	else Lpq = Point(p.x-q.x, p.y-q.y);
 
-	Point Dp_normal, Dq_normal, Lpq_normal;
-	Dp_normal.x = Dp.x/(sqrt((float)(Dp.x*Dp.x + Dp.y*Dp.y)));
-	Dp_normal.y = Dp.y/(sqrt((float)(Dp.x*Dp.x + Dp.y*Dp.y)));
-	Dq_normal.x = Dq.x/(sqrt((float)(Dq.x*Dq.x + Dq.y*Dq.y)));
-	Dq_normal.y = Dq.y/(sqrt((float)(Dq.x*Dq.x + Dq.y*Dq.y)));
-	Lpq_normal.x = Lpq.x/(sqrt((float)(Lpq.x*Lpq.x + Lpq.y*Lpq.y)));
-	Lpq_normal.y = Lpq.y/(sqrt((float)(Lpq.x*Lpq.x + Lpq.y*Lpq.y)));
+	NormalizePoint(Dp);
+	NormalizePoint(Dq);
+	NormalizePoint(Lpq);
 
-	dp = Dp_normal.x*Lpq_normal.x-Dp_normal.y*Lpq_normal.y;
-	dq = Dq_normal.x*Lpq_normal.x-Dq_normal.y*Lpq_normal.y;
+	dp = Dp.x*Lpq.x-Dp.y*Lpq.y;
+	dq = Dq.x*Lpq.x-Dq.y*Lpq.y;
 										
-	if( dp < 3.0e+009 && dp > -3.0e+009)
-		dp = 0.0;
-	if( dq < 3.0e+009 && dq > -3.0e+009)
-		dq = 0.0;
+	NormalizeSmallValues(dp);
+	NormalizeSmallValues(dq);
 
-	f_d = 1/M_PI*(acos(dp)+acos(dq));
-	return wD * f_d;
+	return wD * 1/M_PI*(acos(dp)+acos(dq));
+}
+
+void IntelligentScissors::NormalizePoint(Point &p)
+{
+	Point normal;
+	normal.x = p.x/(sqrt((float)(p.x*p.x + p.y*p.y)));
+	normal.y = p.y/(sqrt((float)(p.x*p.x + p.y*p.y)));
+	p = normal;
+}
+
+void IntelligentScissors::NormalizeSmallValues(double &v)
+{
+	if(v < 3.0e+009 && v > -3.0e+009) v = 0.0;
 }
 
 double IntelligentScissors::fG(Point q, int n)
@@ -133,7 +143,6 @@ double IntelligentScissors::fG(Point q, int n)
 		return wG * ((1 - (G.at<float>(q.x,q.y) / maxG)) *  (1 / sqrt(2.0)));
 }
 
-// Comprobar
 Point IntelligentScissors::getNeighbor(Point p, int n)
 {
 	Point q;
@@ -181,10 +190,10 @@ void IntelligentScissors::setError(int error)
 
 void IntelligentScissors::setPoint(int x, int y)
 {
-	Point s = Point(x, y);
+	Point s = Point(y, x);
 	drawPoint(s);
 	if(startPoint == Point())
-		startPoint = Point(x, y);
+		startPoint = Point(y, x);
 	else
 		drawPath(s);
 	optimalPath(s);
@@ -196,13 +205,14 @@ void IntelligentScissors::drawPath(Point s)
 	while(aux != Point())
 	{
 		P_result.push_back(aux);
-		circle(imgColor, aux, 2, Scalar(0,0,150), -1, 8, 0 );
+		circle(imgColor, Point(aux.y, aux.x), 2, Scalar(0,0,150), -1, 8, 0 );
 		aux = P[aux.x][aux.y];
 	}
 }
 
 void IntelligentScissors::drawPoint(Point s)
 {
+	s = Point(s.y, s.x);
 	circle(imgColor, s, 5, Scalar(0,0,255), -1, 8, 0 );
 }
 

@@ -4,7 +4,7 @@ INC = include
 BIN = bin
 LIB = lib
 SRC = src
-CXXFLAGS =-Wall -g -c -O1
+CXXFLAGS =-Wall -g -c -O3
 OPENCV = `pkg-config opencv --cflags --libs`
 LIBS = $(OPENCV)
 
